@@ -1,7 +1,7 @@
 import Node from "./node";
 import NodeGroupBackingData from "./backing-data/node-group-backing-data";
 
-class NodeGroup extends Node {
+abstract class NodeGroup extends Node {
 
     constructor(val: NodeGroupBackingData) {
         super({

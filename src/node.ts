@@ -23,12 +23,7 @@ abstract class Node {
         this._parentNode = null;
     }
 
-    /**
-     * @return string
-     */
-    get nodeName(): string {
-        throw new Error('Implement nodeName.');
-    }
+    abstract get nodeName(): string;
 
     set nodeValue(val: string | null) {
     }
@@ -37,9 +32,7 @@ abstract class Node {
         return null;
     }
 
-    get nodeType(): number {
-        throw new Error('Implement nodeType.');
-    }
+    abstract get nodeType(): number;
 
     set parentNode(parent) {
         this._parentNode = parent;

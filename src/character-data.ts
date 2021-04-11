@@ -1,13 +1,10 @@
 import Node from "./node";
 
-class CharacterData extends Node {
+abstract class CharacterData extends Node {
 
-    set data(data) {
-    }
+    abstract set data(data);
 
-    get data() {
-        return '';
-    }
+    abstract get data(): string;
 
     get length() {
         return this.data.length;

@@ -13,7 +13,7 @@ class Text extends CharacterData {
     }
 
     get nodeName() {
-        return super.nodeName;
+        return '#text';
     }
 
     get nodeType() {
