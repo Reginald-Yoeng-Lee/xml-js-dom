@@ -180,7 +180,6 @@ abstract class Node {
 
     cloneNode(deep?: boolean): Node {
         const newNode = new (this.constructor as ObjectConstructor)(this._cloneObject(this._origin)) as Node;
-        newNode._parentNode = null;
         if (deep) {
             for (let child of this.childNodes) {
                 newNode.appendChild(child.cloneNode(deep));
