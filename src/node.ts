@@ -140,9 +140,6 @@ abstract class Node {
         if (refIndex < 0) {
             throw new Error('NOT_FOUND_ERR');
         }
-        if (!newChild) {
-            debugger;
-        }
         if (newChild.ownerDocument && newChild.ownerDocument !== this.ownerDocument) {
             throw new Error('WRONG_DOCUMENT_ERR');
         }
