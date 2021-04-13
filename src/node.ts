@@ -93,7 +93,7 @@ abstract class Node {
 
     insertBefore(newChild: Node, refChild?: Node | null) {
         const refIndex = this._verifyChildModification(newChild, refChild);
-        if (this.childNodes.indexOf(newChild) === refIndex - 1) {   // The newChild is just at its right place.
+        if (refIndex > 0 && this.childNodes.indexOf(newChild) === refIndex - 1) {   // The newChild is just at its right place.
             return newChild;
         }
 
