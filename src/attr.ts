@@ -1,6 +1,6 @@
 import Node from "./node";
 import AttrBackingData from "./backing-data/attr-backing-data";
-import Element from "./element";
+import type Element from "./element";
 
 class Attr extends Node {
 

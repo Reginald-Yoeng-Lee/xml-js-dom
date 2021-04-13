@@ -1,8 +1,8 @@
 import NodeList from "./node-list";
-import NamedNodeMap from "./named-node-map";
+import type NamedNodeMap from "./named-node-map";
 import BackingData from "./backing-data/backing-data";
-import Attr from "./attr";
-import Document from "./document";
+import type Attr from "./attr";
+import type Document from "./document";
 
 abstract class Node {
 
@@ -78,13 +78,7 @@ abstract class Node {
     }
 
     get ownerDocument(): Document | null {
-        if (this.parentNode) {
-            if (this.parentNode instanceof Document) {
-                return this.parentNode;
-            }
-            return this.parentNode.ownerDocument;
-        }
-        return null;
+        return this.parentNode?.ownerDocument || null;
     }
 
     get origin() {

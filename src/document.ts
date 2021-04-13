@@ -24,6 +24,10 @@ class Document extends NodeGroup {
         return this.documentElement;
     }
 
+    get ownerDocument(): Document | null {
+        return this;
+    }
+
     importNode(importedNode: Node, deep: boolean) {
         return importedNode.cloneNode(deep);
     }

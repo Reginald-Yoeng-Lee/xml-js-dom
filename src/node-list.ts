@@ -1,4 +1,4 @@
-import Node from "./node";
+import type Node from "./node";
 
 class NodeList<N extends Node> extends Array<N> {
 
