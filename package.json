@@ -4,7 +4,7 @@
   "description": "A lightweight library for parsing xml to DOM tree, and vice versa.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require ts-node/register --extension ts --recursive"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,6 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "xml-js": "^1.6.11"
+    "@reginaldlee/xml-js": "^1.7.12"
   }
 }

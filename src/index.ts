@@ -1,5 +1,4 @@
-import xmlConverter from 'xml-js';
-import {Options} from 'xml-js';
+import xmlConverter, {Options} from '@reginaldlee/xml-js';
 
 import Node from "./node";
 export {Node};
@@ -47,7 +46,10 @@ export const toXml = (node: Node | BackingData, opts: Options.JS2XML = {}) => {
     if (obj.name) { // Otherwise the outer element would loss.
         obj = {elements: [obj]};
     }
-    return xmlConverter.js2xml(obj, opts);
+    return xmlConverter.js2xml(obj, {
+        spaceBeforeSelfClosingTag: true,    // Add the space before the slash of self-closing tag by default.
+        ...opts,
+    });
 };
 
 export default {parse, toXml};
