@@ -352,7 +352,6 @@ describe('Test nodes operations', function () {
                     elements: [{
                         name: 'app:a',
                         type: 'element',
-                        attributes: {},
                         elements: [],
                     }],
                 }],

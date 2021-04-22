@@ -109,6 +109,9 @@ class Element extends NodeGroup {
             return null;
         }
         delete this.origin.attributes[oldAttr.name];
+        if (Object.keys(this.origin.attributes).length === 0) {
+            delete this.origin.attributes;
+        }
         oldAttr.ownerElement = null;
         delete oldAttr.valueChangedListener;
         return oldAttr;
