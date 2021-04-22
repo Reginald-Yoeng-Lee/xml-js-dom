@@ -152,16 +152,15 @@ class Element extends NodeGroup {
             this.prefix = namespace.prefix;
             if ((previousPrefix || '') !== (namespace.prefix || '')) {
                 this.removeAttribute(this._constructNsAttrName(previousPrefix));
+            }
+            if (this.getNamespaceUrl(namespace.prefix) !== namespace.url) {
                 this.setAttribute(this._constructNsAttrName(namespace.prefix), namespace.url);
-            } else {
-                const attr = this.getAttributeNode(this._constructNsAttrName(namespace.prefix));
-                attr && (attr.value = namespace.url);
             }
         }
     }
 
     getNamespace(): Namespace | null {
-        const url = this.getNamespaceUrl(this.prefix) || (this.parentNode instanceof Element && this.parentNode.getNamespaceUrl(this.prefix) || null);
+        const url = this.getNamespaceUrl(this.prefix);
         if (this.prefix) {
             if (!url) {
                 throw new Error(`Invalid namespace prefix ${this.prefix}. No url found.`);
@@ -171,8 +170,8 @@ class Element extends NodeGroup {
         return url ? {prefix: '', url} : null;
     }
 
-    getNamespaceUrl(prefix: string | null) {
-        return this.getAttribute(this._constructNsAttrName(prefix));
+    getNamespaceUrl(prefix: string | null): string {
+        return this.getAttribute(this._constructNsAttrName(prefix)) || (this.parentNode instanceof Element ? this.parentNode.getNamespaceUrl(prefix) : '');
     }
 
     protected _constructNsAttrName(prefix: string | null): string {

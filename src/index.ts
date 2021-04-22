@@ -13,6 +13,8 @@ export {default as CDATASection} from "./cdata-section";
 import DefaultNodeFactory from "./node-factory/default-node-factory";
 import NodeFactory from "./node-factory/node-factory";
 
+export {default as Namespace} from './namespace';
+
 export {NodeFactory};
 export {default as NodeFactoryGroup} from './node-factory/node-factory-group';
 export {default as DocumentFactory} from './node-factory/document-factory';

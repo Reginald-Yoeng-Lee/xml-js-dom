@@ -16,7 +16,7 @@ abstract class Node {
     private readonly _childNodes: NodeList<Node>;
     private _parentNode: Node | null;
 
-    constructor(val: BackingData | null = null) {
+    protected constructor(val: BackingData | null = null) {
         this._origin = val || {};
 
         this._childNodes = new NodeList();

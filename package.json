@@ -4,12 +4,15 @@
   "description": "A lightweight library for parsing xml to DOM tree, and vice versa.",
   "main": "lib/index.js",
   "scripts": {
+    "prepublish": "npm test",
+    "prepare": "tsc",
     "test": "mocha --require ts-node/register --extension ts --recursive"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ReinaldLee/xml-js-dom.git"
   },
+  "files": ["lib"],
   "keywords": [
     "xml",
     "dom"

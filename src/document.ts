@@ -1,5 +1,6 @@
 import Node from "./node";
 import NodeGroup from "./node-group";
+import type Element from "./element";
 import NodeGroupBackingData from "./backing-data/node-group-backing-data";
 
 class Document extends NodeGroup {
@@ -16,8 +17,8 @@ class Document extends NodeGroup {
         return Node.DOCUMENT_NODE;
     }
 
-    get documentElement(): Node | null {
-        return this.childNodes[0] || null;
+    get documentElement(): Element | null {
+        return this.firstChild as Element || null;
     }
 
     get root() {

@@ -3,14 +3,14 @@ import NodeGroupBackingData from "./backing-data/node-group-backing-data";
 
 abstract class NodeGroup extends Node {
 
-    constructor(val: NodeGroupBackingData) {
+    protected constructor(val: NodeGroupBackingData) {
         super({
             elements: [],
             ...(val || {}),
         });
     }
 
-    insertBefore(newChild: Node, refChild?: Node) {
+    insertBefore(newChild: Node, refChild?: Node | null) {
         super.insertBefore(newChild, refChild);
         const index = this.childNodes.indexOf(newChild);
         if (this.origin.elements[index] !== newChild.origin) {
