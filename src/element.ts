@@ -144,7 +144,7 @@ class Element extends NodeGroup {
         return this.text.trim();
     }
 
-    setNamespace(namespace: Namespace) {
+    setNamespace(namespace?: Namespace | null) {
         const previousPrefix = this.prefix;
         if (!namespace || !namespace.url) { // Equals to clear current element's namespace.
             this.removeAttribute(this._constructNsAttrName(previousPrefix));
