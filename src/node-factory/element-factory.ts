@@ -19,7 +19,7 @@ class ElementFactory implements NodeFactory {
             }
             element.appendChild(child);
         }
-        for (const [name, value] of (attributes || []).entries()) {
+        for (const [name, value] of Object.entries<string>(attributes || {})) {
             element.setAttribute(name, value);
         }
         return element;

@@ -16,7 +16,7 @@ class DefaultNodeFactory implements NodeFactoryGroup {
     }
 
     parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
-        return this.factories.reduce(((node: Node | null, factory: NodeFactory) => factory.parseNode(data, mainFactory, node)), null);
+        return this.factories.reduce(((node: Node | null, factory: NodeFactory) => factory.parseNode(data, mainFactory, node) || node), null);
     }
 
     protected initFactories() {
