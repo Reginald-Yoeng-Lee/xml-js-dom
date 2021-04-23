@@ -119,8 +119,8 @@ class Element extends NodeGroup {
 
     /**
      * Sets the content of the element to be the text given. All existing text content and non-text context is removed.
-     * If this element should have both textual content and nested elements, use setContent instead. Setting a null text
-     * value is equivalent to setting an empty string value.
+     * If this element should have both textual content and nested elements, use appendChild or insertBefore instead.
+     * Setting a null text value is equivalent to setting an empty string value.
      *
      * @param text string|null new text content for the element
      */

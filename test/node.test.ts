@@ -237,6 +237,12 @@ describe('Test nodes operations', function () {
             expect(document.root?.tagName).eq('main');
         });
 
+        it('change namespace prefix', function () {
+            const document = createDocumentWithRootElement('main', {prefix: 'app', url: 'http://app.com'});
+            document.root!.prefix = '';
+            expect(document.root?.getNamespace()).is.null;
+        });
+
         it('namespace fetching', function () {
             const document = createDocumentWithRootElement('main', {prefix: 'app', url: 'http://app.com'});
             expect(document.root?.getNamespace()).deep.eq({prefix: 'app', url: 'http://app.com'});

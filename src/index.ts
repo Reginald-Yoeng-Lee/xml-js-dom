@@ -13,6 +13,9 @@ export {default as CDATASection} from "./cdata-section";
 import DefaultNodeFactory from "./node-factory/default-node-factory";
 import NodeFactory from "./node-factory/node-factory";
 
+export {default as NodeList} from './node-list';
+export {default as NamedNodeMap} from './named-node-map';
+
 export {default as Namespace} from './namespace';
 
 export {NodeFactory};
