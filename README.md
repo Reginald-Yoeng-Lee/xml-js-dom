@@ -49,8 +49,8 @@ _Currently only partial of the types and functions of the XML items have been im
 [Document](#document----nodegroup)  
 [Element](#element----nodegroup)  
 [CharacterData](#characterdata----node)  
-[Text](#text----characterdata)
-[CDATASection](#cdatasection----characterdata)
+[Text](#text----characterdata)  
+[CDATASection](#cdatasection----characterdata)  
 [Attr](#attr----node)
 
 [NodeList](#nodelistn-extends-node----arrayn)  
@@ -70,6 +70,8 @@ The `ParsingOptions` is similar to [XML2JS](https://github.com/Reginald-Yoeng-Le
 
 `toXml(node: Node | BackingData, opts: Options.JS2XML = {}): string`
 Serialize the DOM tree into the XML string. Please refer the [JS2XML](https://github.com/Reginald-Yoeng-Lee/xml-js#options-for-converting-js-object--json--xml) for more infomation.
+
+_[(back to API references)](#api-references)_
 
 #### Node
 
@@ -152,7 +154,11 @@ Duplicate the node (and all the decedents if `deep` is true). Modify the cloned 
 `protected _cloneObject(obj: BackingData | BackingData[]): BackingData | BackingData[]`
 The implementation of deep copy of the objects and arrays using by the `cloneNode()`.
 
+_[(back to API references)](#api-references)_
+
 #### NodeGroup  =>  Node
+
+_[(back to API references)](#api-references)_
 
 #### Document  =>  NodeGroup
 
@@ -168,6 +174,8 @@ The alias of `documentElement`
 
 `importNode(importedNode: Node, deep: boolean): Node`
 Clone the `importedNode` and return it.
+
+_[(back to API references)](#api-references)_
 
 #### Element  =>  NodeGroup
 
@@ -241,6 +249,8 @@ Get the url of the namespace by the giving prefix. Notice that the prefix doesn'
 `protected _constructNsAttrName(prefix: string | null): string`
 Construct the attribute name represents for the namespace. By default, the name is `xmlns:{prefix}`(colon will be omitted if prefix is empty).
 
+_[(back to API references)](#api-references)_
+
 #### CharacterData  =>  Node
 
 **[Attributes]**
@@ -256,6 +266,8 @@ The length of the content.
 `appendData(data: string): void`
 Concat the `data` to the current content.
 
+_[(back to API references)](#api-references)_
+
 #### Text  =>  CharacterData
 
 **[Methods]**
@@ -263,9 +275,13 @@ Concat the `data` to the current content.
 `splitText(offset: number): Text`
 Split the content from the giving `offset` position. The former part will be left to this node, while the latter part will be wrapped into a new `Text` and insert after this node. Return the `Text` node represents the latter part.
 
+_[(back to API references)](#api-references)_
+
 #### CDATASection  =>  CharacterData
 
 This is similar to `Text`, except all the character here will be reserved without escaped.
+
+_[(back to API references)](#api-references)_
 
 #### Attr  =>  Node
 
@@ -288,12 +304,16 @@ The function be called when the value of this attribute changed. Usually this is
 `detach(): Attr`
 Remove self from the `ownerElement` and return self.
 
+_[(back to API references)](#api-references)_
+
 #### NodeList\<N extends Node>  =>  Array<N>
 
 **[Methods]**
 
 `item(index: number): N | null`
 Fetch the item at the position of `index`.
+
+_[(back to API references)](#api-references)_
 
 #### NamedNodeMap\<N extends Node>
 
@@ -320,6 +340,8 @@ Remove the item set before by name.
 Fetch the item by the giving `index`. Notice that although this method will return the node according to the order they've been inserted,
 this behavior has **NOT** been strictly defined. So use this method only if you exactly know what you're doing.
 
+_[(back to API references)](#api-references)_
+
 #### Namespace
 
 **[Attributes]**
@@ -330,6 +352,10 @@ The prefix represents the namespace.
 `url: string`
 The url identify the namespace.
 
+_[(back to API references)](#api-references)_
+
 #### BackingData
 
 All the `BackingData` and its decedents could be referred to [xml-js API](https://github.com/Reginald-Yoeng-Lee/xml-js#sample-conversions). Non-compact mode is used here.
+
+_[(back to API references)](#api-references)_
