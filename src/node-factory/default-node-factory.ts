@@ -6,6 +6,7 @@ import DocumentFactory from "./document-factory";
 import ElementFactory from "./element-factory";
 import TextFactory from "./text-factory";
 import CDATASectionFactory from "./cdata-section-factory";
+import CommentFactory from "./comment-factory";
 
 class DefaultNodeFactory implements NodeFactoryGroup {
 
@@ -25,6 +26,7 @@ class DefaultNodeFactory implements NodeFactoryGroup {
             new ElementFactory(),
             new TextFactory(),
             new CDATASectionFactory(),
+            new CommentFactory(),
         );
     }
 }

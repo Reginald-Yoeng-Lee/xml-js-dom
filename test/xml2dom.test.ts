@@ -4,9 +4,11 @@ import {
     Element,
     Text,
     CDATASection,
+    Comment,
     Namespace,
 } from '../src';
 import {expect} from 'chai';
+import {describe} from "mocha";
 
 describe('Test XML 2 DOM converting', function () {
     describe('Common node parser', function () {
@@ -116,6 +118,41 @@ describe('Test XML 2 DOM converting', function () {
         it('Direct child trimmed text of element', function () {
             const root = (<Document>parse('<main>    Begin<a>A</a><b>B<![CDATA[&<b/>]]></b><c><c1>C1</c1><c2>C2</c2></c></main>')).root as Element;
             expect(root.textTrim).eq('Begin');
+        });
+    });
+
+    describe('Comment in DOM tree', function () {
+        it('comment in the root level', function () {
+            const document = parse('<!--Comment 1--><main><a /></main><!--Comment 2-->');
+            const expected = generateDocument();
+            expected.insertBefore(new Comment('Comment 1'), expected.root);
+            expected.appendChild(new Comment('Comment 2'));
+            expected.root?.appendChild(new Element('a'));
+            expect(document?.origin).deep.eq(expected.origin);
+        });
+
+        it('single empty comment', function () {
+            const document = parse('<main><!----></main>');
+            expect(document?.origin).deep.eq(generateDocument()?.origin);
+        });
+
+        it('empty comment', function () {
+            const document = parse('<main><!--a--><!----></main>');
+            expect(document?.origin).deep.eq(generateDocument().root?.appendChild(new Comment('a')).ownerDocument?.origin);
+        });
+
+        it('multi line comment', function () {
+            const document = parse(`
+            <main>
+            <a />
+<!--<b />
+<c />-->
+</main>
+            `);
+            const expected = generateDocument();
+            expected.root?.appendChild(new Element('a'));
+            expected.root?.appendChild(new Comment('<b />\n<c />'));
+            expect(document?.origin).deep.eq(expected.origin);
         });
     });
 });

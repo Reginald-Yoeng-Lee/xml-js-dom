@@ -6,8 +6,10 @@ import {
     Namespace,
     Text,
     CDATASection,
+    Comment,
 } from "../src";
 import {expect} from 'chai';
+import {describe} from "mocha";
 
 describe('Test DOM to XML converting', function () {
     describe('Node structure', function () {
@@ -98,6 +100,28 @@ describe('Test DOM to XML converting', function () {
             const {child} = prepareDifferentNamespaceTree(null, null);
             child.setNamespace({prefix: 'web', url: 'http://web.com'});
             expect(toXml(child)).eq('<main><web:a xmlns:web="http://web.com" /></main>');
+        });
+    });
+
+    describe('Comment', function () {
+        it('Comment in the root level', function () {
+            const document = new Document();
+            document.appendChild(new Comment('Comment 1'));
+            document.appendChild(new Element('main')).appendChild(new Element('a'));
+            document.appendChild(new Comment('Comment 2'));
+            expect(toXml(document)).eq('<!--Comment 1--><main><a /></main><!--Comment 2-->');
+        });
+
+        it('Comment as the only child', function () {
+            const el = generateRootElement();
+            el.appendChild(new Comment('Comment 1'));
+            expect(toXml(el)).eq('<main><!--Comment 1--></main>');
+        });
+
+        it('Empty comment', function () {
+            const el = generateRootElement();
+            el.appendChild(new Comment(''));
+            expect(toXml(el)).eq('<main><!----></main>');
         });
     });
 });

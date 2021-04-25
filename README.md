@@ -51,7 +51,8 @@ _Currently only partial of the types and functions of the XML items have been im
 [CharacterData](#characterdata----node)  
 [Text](#text----characterdata)  
 [CDATASection](#cdatasection----characterdata)  
-[Attr](#attr----node)
+[Attr](#attr----node)  
+[Comment](#comment----characterdata)
 
 [NodeList](#nodelistn-extends-node----arrayn)  
 [NamedNodeMap](#namednodemapn-extends-node)
@@ -303,6 +304,22 @@ The function be called when the value of this attribute changed. Usually this is
 
 `detach(): Attr`
 Remove self from the `ownerElement` and return self.
+
+_[(back to API references)](#api-references)_
+
+#### Comment  =>  CharacterData
+
+**[Attributes]**
+
+`data: string`
+The text content of `Comment` node, which is always an empty string. Being empty ensure that `Node.prototype.getTextValue()` and
+`Element.prototype.text` could return the correct value (without the comment).
+
+`length: number`
+The length of the `data`, which is always 0.
+
+`nodeValue: string`
+The actual content of comment.
 
 _[(back to API references)](#api-references)_
 

@@ -9,6 +9,7 @@ export {default as Attr} from "./attr";
 export {default as CharacterData} from "./character-data";
 export {default as Text} from "./text";
 export {default as CDATASection} from "./cdata-section";
+export {default as Comment} from './comment';
 
 import DefaultNodeFactory from "./node-factory/default-node-factory";
 import NodeFactory from "./node-factory/node-factory";
@@ -24,6 +25,7 @@ export {default as DocumentFactory} from './node-factory/document-factory';
 export {default as ElementFactory} from './node-factory/element-factory';
 export {default as TextFactory} from './node-factory/text-factory';
 export {default as CDATASectionFactory} from './node-factory/cdata-section-factory';
+export {default as CommentFactory} from './node-factory/comment-factory';
 export {DefaultNodeFactory};
 
 import BackingData from "./backing-data/backing-data";
@@ -33,6 +35,7 @@ export type {default as ElementBackingData} from './backing-data/element-backing
 export type {default as AttrBackingData} from './backing-data/attr-backing-data';
 export type {default as TextBackingData} from './backing-data/text-backing-data';
 export type {default as CDATABackingData} from './backing-data/cdata-backing-data';
+export type {default as CommentBackingData} from './backing-data/comment-backing-data';
 
 export interface ParsingOptions extends Options.XML2JS {
     nodeFactory?: NodeFactory;

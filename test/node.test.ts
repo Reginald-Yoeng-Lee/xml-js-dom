@@ -3,9 +3,11 @@ import {
     Element,
     Text,
     CDATASection,
+    Comment,
     Namespace,
 } from "../src";
 import {expect} from 'chai';
+import {describe} from "mocha";
 
 describe('Test nodes operations', function () {
     describe('Origin data', function () {
@@ -162,6 +164,14 @@ describe('Test nodes operations', function () {
             const subElement = new Element('sub');
             mainElement.appendChild(subElement);
             expect(subElement.ownerDocument).equal(document);
+        });
+
+        it('root element of document', function () {
+            const document = new Document();
+            document.appendChild(new Comment('Comment 1'));
+            const mainElement = document.appendChild(new Element('main'));
+            document.appendChild(new Comment('Comment 2'));
+            expect(document.root).eq(mainElement);
         });
     });
 
@@ -362,6 +372,52 @@ describe('Test nodes operations', function () {
                     }],
                 }],
             });
+        });
+    });
+
+    describe('Comment', function () {
+        it('comment origin data', function () {
+            const document = createDocumentWithRootElement();
+            document.root?.appendChild(new Comment('Comment 1'));
+            document.root?.appendChild(new Element('a')).appendChild(new Comment('Sub comment 1'));
+            document.root?.appendChild(new Comment('Comment 2'));
+            expect(document.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        type: 'comment',
+                        comment: 'Comment 1',
+                    }, {
+                        name: 'a',
+                        type: 'element',
+                        elements: [{
+                            type: 'comment',
+                            comment: 'Sub comment 1',
+                        }],
+                    }, {
+                        type: 'comment',
+                        comment: 'Comment 2',
+                    }],
+                }],
+            });
+        });
+
+        it('get element text without comment', function () {
+            const document = createDocumentWithRootElement();
+            document.root?.appendChild(new Text('Text'));
+            document.root?.appendChild(new Comment('Comment'));
+            document.root?.appendChild(new CDATASection('<CData />'));
+            expect(document.root?.text).eq('Text<CData />');
+        });
+
+        it('get sub tree text without comment', function () {
+            const document = createDocumentWithRootElement();
+            document.root?.appendChild(new Text('Text'));
+            const subEl = document.root?.appendChild(new Element('a'));
+            subEl?.appendChild(new Text('Sub text'));
+            subEl?.appendChild(new Comment('Comment'));
+            expect(document.getTextValue()).eq('TextSub text');
         });
     });
 });
