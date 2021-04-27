@@ -267,6 +267,18 @@ The length of the content.
 `appendData(data: string): void`
 Concat the `data` to the current content.
 
+`deleteData(offset: number, count: number): void`
+Remove the substring from `offset` to `offset + count`.
+
+`insertData(offset: number, data: string): void`
+Insert the `data` to the position of `offset`.
+
+`replaceData(offset: number, count: number, data: string): void`
+Replace the substring from `offset` to `offset + count` with `data`.
+
+`substringData(offset: number, count: number): string`
+Fetch the substring from `offset` to `offset + count`.
+
 _[(back to API references)](#api-references)_
 
 #### Text  =>  CharacterData
