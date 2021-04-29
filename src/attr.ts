@@ -66,7 +66,7 @@ class Attr extends Node {
         return this._valueChangedListener;
     }
 
-    detach() {
+    detach(): Attr {
         this.ownerElement && this.ownerElement.removeAttributeNode(this);
         this.ownerElement = null;
         delete this.valueChangedListener;

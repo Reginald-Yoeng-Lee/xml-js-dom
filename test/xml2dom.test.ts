@@ -155,6 +155,72 @@ describe('Test XML 2 DOM converting', function () {
             expect(document?.origin).deep.eq(expected.origin);
         });
     });
+
+    describe('Instruction and declaration in DOM tree', function () {
+        it('Single declaration and instruction', function () {
+            const root = parse('<?xml version="1.0"?><main><?go?></main>');
+            expect(root?.origin).deep.eq({
+                declaration: {attributes: {version: '1.0'}},
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        name: 'go',
+                        type: 'instruction',
+                        instruction: '',
+                    }],
+                }],
+            });
+        });
+
+        it('Delete declaration', function () {
+            const root = <Document>parse('<?xml version="1.0"?><main><?go?></main>');
+            root.declaration?.detach();
+            expect(root?.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        name: 'go',
+                        type: 'instruction',
+                        instruction: '',
+                    }],
+                }],
+            });
+        });
+
+        it('Delete instruction', function () {
+            const root = <Document>parse('<?xml version="1.0"?><main><?go?></main>');
+            root.root?.firstChild?.detach();
+            expect(root.origin).deep.eq({
+                declaration: {attributes: {version: '1.0'}},
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [],
+                }],
+            });
+        });
+
+        it('Change declaration attributes', function () {
+            const root = <Document>parse('<?xml version="1.0"?><main><?go?></main>');
+            root.declaration!.version = '1.1';
+            root.declaration!.encoding = 'utf-16';
+            root.declaration!.standalone = 'yes';
+            expect(root.origin).deep.eq({
+                declaration: {attributes: {version: '1.1', encoding: 'utf-16', standalone: 'yes'}},
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        name: 'go',
+                        type: 'instruction',
+                        instruction: '',
+                    }],
+                }],
+            });
+        });
+    });
 });
 
 const generateDocument = (name = 'main', namespace?: Namespace | null): Document => {

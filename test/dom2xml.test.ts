@@ -6,6 +6,8 @@ import {
     Namespace,
     Text,
     CDATASection,
+    ProcessingInstruction,
+    Declaration,
     Comment,
 } from "../src";
 import {expect} from 'chai';
@@ -124,6 +126,26 @@ describe('Test DOM to XML converting', function () {
             expect(toXml(el)).eq('<main><!----></main>');
         });
     });
+
+    describe('Declaration and instruction', function () {
+        it('Single declaration and instruction', function () {
+            const document = prepareDocumentWithDeclarationAndInstruction();
+            expect(toXml(document)).eq('<?xml?><main><a /><?go there?></main>');
+        });
+
+        it('Set declaration attributes', function () {
+            const document = prepareDocumentWithDeclarationAndInstruction();
+            document.declaration!.version = '1.0';
+            document.declaration!.standalone = 'yes';
+            expect(toXml(document)).eq('<?xml version="1.0" standalone="yes"?><main><a /><?go there?></main>');
+        });
+
+        it('Append instruction', function () {
+            const document = prepareDocumentWithDeclarationAndInstruction();
+            document.root?.appendChild(new ProcessingInstruction({name: 'go', instruction: 'again'}));
+            expect(toXml(document)).eq('<?xml?><main><a /><?go there?><?go again?></main>')
+        });
+    });
 });
 
 const generateRootElement = (name: string | ElementBackingData = 'main', namespace?: Namespace | null): Element => {
@@ -137,4 +159,12 @@ const prepareDifferentNamespaceTree = (parentNamespace: Namespace | null, childN
     const child = <Element>el.appendChild(new Element('a'));
     child.setNamespace(childNamespace);
     return {root: el, child};
+};
+
+const prepareDocumentWithDeclarationAndInstruction = () => {
+    const document = generateRootElement().ownerDocument!;
+    document.declaration = new Declaration();
+    document.root?.appendChild(new Element('a'));
+    document.root?.appendChild(new ProcessingInstruction({name: 'go', instruction: 'there'}));
+    return document;
 };

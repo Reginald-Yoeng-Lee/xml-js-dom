@@ -10,6 +10,7 @@ abstract class Node {
     static readonly ATTRIBUTE_NODE = 2;
     static readonly TEXT_NODE = 3;
     static readonly CDATA_SECTION_NODE = 4;
+    static readonly PROCESSING_INSTRUCTION_NODE = 7;
     static readonly COMMENT_NODE = 8;
     static readonly DOCUMENT_NODE = 9;
 

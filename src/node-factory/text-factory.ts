@@ -6,7 +6,7 @@ import Text from "../text";
 
 class TextFactory implements NodeFactory {
 
-    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
+    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Text | null {
         return this.checkTextData(data) ? new Text(data.text || '') : null;
     }
 

@@ -52,6 +52,8 @@ _Currently only partial of the types and functions of the XML items have been im
 [Text](#text----characterdata)  
 [CDATASection](#cdatasection----characterdata)  
 [Attr](#attr----node)  
+[ProcessingInstruction](#processinginstruction----node)  
+[Declaration](#declaration----node)  
 [Comment](#comment----characterdata)
 
 [NodeList](#nodelistn-extends-node----arrayn)  
@@ -170,6 +172,9 @@ The direct child element of this document. If multiple child elements exists(whi
 
 `readonly root: Element | null`
 The alias of `documentElement`
+
+`declaration: Declaration | null`
+The declaration of this XML.
 
 **[Methods]**
 
@@ -316,6 +321,40 @@ The function be called when the value of this attribute changed. Usually this is
 
 `detach(): Attr`
 Remove self from the `ownerElement` and return self.
+
+_[(back to API references)](#api-references)_
+
+#### ProcessingInstruction  =>  Node
+
+**[Attributes]**
+
+`target: string`
+The target of this processing instruction.
+
+`instruction: string`
+The content of this processing instruction.
+
+`data: string`
+Alias of `instruction`.
+
+_[(back to API references)](#api-references)_
+
+#### Declaration  =>  Node
+
+**[Attributes]**
+
+`ownerDocument: Document | null`
+The document this declaration belongs to.
+
+`version: string`
+The version of this XML standard used.
+
+`encoding: string`
+The encoding used in this XML. Default is utf-8.
+
+`standalone: 'yes' | 'no' | ''`
+It informs the parser whether the document relies on the information from an external source, such as external document type definition (DTD), for its content. The default value is set to _no_.
+Setting it to yes tells the processor there are no external declarations required for parsing the document.
 
 _[(back to API references)](#api-references)_
 

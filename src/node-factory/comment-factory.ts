@@ -6,7 +6,7 @@ import Comment from "../comment";
 
 class CommentFactory implements NodeFactory {
 
-    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
+    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Comment | null {
         return this.checkCommentData(data) ? new Comment(data.comment || '') : null;
     }
 

@@ -6,7 +6,7 @@ import CDATASection from "../cdata-section";
 
 class CDATASectionFactory implements NodeFactory {
 
-    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
+    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): CDATASection | null {
         return this.checkCDATA(data) ? new CDATASection(data.cdata || '') : null;
     }
 

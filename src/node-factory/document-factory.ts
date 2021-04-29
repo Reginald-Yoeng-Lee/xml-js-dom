@@ -2,6 +2,7 @@ import Node from "../node";
 import NodeFactory from "./node-factory";
 import BackingData from "../backing-data/backing-data";
 import Document from "../document";
+import Declaration from "../declaration";
 
 class DocumentFactory implements NodeFactory {
     parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
@@ -13,6 +14,9 @@ class DocumentFactory implements NodeFactory {
                     continue;
                 }
                 document.appendChild(child);
+            }
+            if (data.declaration) {
+                document.declaration = new Declaration(data.declaration);
             }
             return document;
         }

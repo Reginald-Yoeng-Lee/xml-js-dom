@@ -4,6 +4,8 @@ import {
     Text,
     CDATASection,
     Comment,
+    ProcessingInstruction,
+    Declaration,
     Namespace,
 } from "../src";
 import {expect} from 'chai';
@@ -186,6 +188,29 @@ describe('Test nodes operations', function () {
             document.root?.appendChild(bElement);
             aElement.appendChild(new Text('Hello'));
             aElement.appendChild(a1Element);
+            bElement.appendChild(new Text('Halo'));
+            bElement.appendChild(new CDATASection('World<>'));
+            bElement.appendChild(new Text('!'));
+
+            const cloned = document.cloneNode(true);
+
+            expect(cloned).deep.eq(document);
+        });
+
+        it('clone node with declaration and instruction', function () {
+            const document = createDocumentWithRootElement();
+            document.declaration = new Declaration({attributes: {version: '1.0', encoding: 'utf-8', standalone: 'no'}});
+
+            const aElement = new Element('a');
+            const bElement = new Element('b');
+            const a1Element = new Element('a1');
+
+            document.root?.appendChild(aElement);
+            document.root?.appendChild(new ProcessingInstruction({name: 'go', instruction: 'from="root"'}))
+            document.root?.appendChild(bElement);
+            aElement.appendChild(new Text('Hello'));
+            aElement.appendChild(a1Element);
+            aElement.appendChild(new ProcessingInstruction({name: 'go', instruction: 'from="a"'}));
             bElement.appendChild(new Text('Halo'));
             bElement.appendChild(new CDATASection('World<>'));
             bElement.appendChild(new Text('!'));
@@ -418,6 +443,103 @@ describe('Test nodes operations', function () {
             subEl?.appendChild(new Text('Sub text'));
             subEl?.appendChild(new Comment('Comment'));
             expect(document.getTextValue()).eq('TextSub text');
+        });
+    });
+
+    describe('Instruction and declaration', function () {
+        it('declaration owner document is set', function () {
+            const document = createDocumentWithRootElement();
+            const declaration = new Declaration();
+            document.declaration = declaration;
+            expect(declaration.ownerDocument).eq(document);
+        });
+
+        it('declaration and instruction origin data', function () {
+            const document = createDocumentWithRootElement();
+            document.declaration = new Declaration({attributes: {version: '1.0', encoding: 'utf-8', standalone: 'yes'}});
+            document.root?.appendChild(new Element('a'));
+            document.root?.appendChild(new ProcessingInstruction({name: 'go', instruction: 'there'}));
+            document.root?.appendChild(new Element('b'));
+            expect(document.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        name: 'a',
+                        type: 'element',
+                        elements: [],
+                    }, {
+                        name: 'go',
+                        instruction: 'there',
+                        type: 'instruction',
+                    }, {
+                        name: 'b',
+                        type: 'element',
+                        elements: [],
+                    }],
+                }],
+                declaration: {
+                    attributes: {
+                        version: '1.0',
+                        encoding: 'utf-8',
+                        standalone: 'yes',
+                    },
+                },
+            });
+        });
+
+        it('declaration detach', function () {
+            const document = createDocumentWithRootElement();
+            const declaration = new Declaration();
+            document.declaration = declaration;
+            declaration.detach();
+            expect(document.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [],
+                }],
+            });
+            expect(declaration.parentNode).is.null;
+        });
+
+        it('instruction detach', function () {
+            const document = createDocumentWithRootElement();
+            document.root?.appendChild(new Element('a'));
+            const instruction = document.root?.appendChild(new ProcessingInstruction({name: 'go', instruction: 'there'}));
+            document.root?.appendChild(new Element('b'));
+            instruction?.detach();
+            expect(document.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [{
+                        name: 'a',
+                        type: 'element',
+                        elements: [],
+                    }, {
+                        name: 'b',
+                        type: 'element',
+                        elements: [],
+                    }],
+                }],
+            })
+        });
+
+        it('replace declaration', function () {
+            const document = createDocumentWithRootElement();
+            const oldDeclaration = new Declaration();
+            document.declaration = oldDeclaration;
+            document.declaration = new Declaration({attributes: {version: '1.1'}});
+            expect(oldDeclaration.ownerDocument).is.null;
+            expect(document.origin).deep.eq({
+                elements: [{
+                    name: 'main',
+                    type: 'element',
+                    elements: [],
+                }],
+                declaration: {attributes: {version: '1.1'}},
+            });
         });
     });
 });

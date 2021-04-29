@@ -6,7 +6,7 @@ import ElementBackingData from "../backing-data/element-backing-data";
 
 class ElementFactory implements NodeFactory {
 
-    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Node | null {
+    parseNode(data: BackingData, mainFactory: NodeFactory, parsedNode?: Node | null): Element | null {
         const {elements, attributes, ...backingData} = data;
         if (!this.checkElementData(backingData)) {
             return null;
